@@ -61,9 +61,8 @@ class PlayerView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.width * 0.8,
-                      margin: const EdgeInsets.symmetric(horizontal: 24),
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      height: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         boxShadow: [
@@ -76,80 +75,90 @@ class PlayerView extends StatelessWidget {
                       ),
                       clipBehavior: Clip.antiAlias,
                       child: CachedNetworkImage(
-                        imageUrl: 'https://i.ytimg.com/vi/Ws5rz3-AvBU/maxresdefault.jpg',
+                        imageUrl: 'https://i.ytimg.com/vi/Ws5rz3-AvBU/hqdefault.jpg',
                         fit: BoxFit.cover,
                         placeholder: (context, url) => const Center(
-                          child: CupertinoActivityIndicator(),
+                          child: CupertinoActivityIndicator(
+                            color: CupertinoColors.white,
+                          ),
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          color: CupertinoColors.systemGrey6,
+                          child: const Center(
+                            child: Icon(
+                              CupertinoIcons.music_note,
+                              color: CupertinoColors.white,
+                              size: 64,
+                            ),
+                          ),
                         ),
                       ),
+                    ),
+                    const SizedBox(height: 24),
+                    Column(
+                      children: [
+                        const Text(
+                          'APT.',
+                          style: TextStyle(
+                            color: CupertinoColors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          'ROSÉ',
+                          style: TextStyle(
+                            color: CupertinoColors.white.withOpacity(0.6),
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
               
-              // Track Info and Progress
+              // Progress Bar
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
                   children: [
-                    const Text(
-                      'APT.',
-                      style: TextStyle(
-                        color: CupertinoColors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
+                    Container(
+                      height: 2,
+                      decoration: BoxDecoration(
+                        color: CupertinoColors.systemGrey6,
+                        borderRadius: BorderRadius.circular(1),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            decoration: BoxDecoration(
+                              color: CupertinoColors.white,
+                              borderRadius: BorderRadius.circular(1),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      'ROSÉ',
-                      style: TextStyle(
-                        color: CupertinoColors.white.withOpacity(0.6),
-                        fontSize: 18,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    
-                    // Progress Bar
-                    Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          height: 2,
-                          decoration: BoxDecoration(
-                            color: CupertinoColors.systemGrey6,
-                            borderRadius: BorderRadius.circular(1),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.3,
-                                decoration: BoxDecoration(
-                                  color: CupertinoColors.white,
-                                  borderRadius: BorderRadius.circular(1),
-                                ),
-                              ),
-                            ],
+                        Text(
+                          '00:00',
+                          style: TextStyle(
+                            color: CupertinoColors.white.withOpacity(0.6),
+                            fontSize: 12,
                           ),
                         ),
-                        const SizedBox(height: 8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '00:00',
-                              style: TextStyle(
-                                color: CupertinoColors.white.withOpacity(0.6),
-                                fontSize: 12,
-                              ),
-                            ),
-                            Text(
-                              '03:30',
-                              style: TextStyle(
-                                color: CupertinoColors.white.withOpacity(0.6),
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
+                        Text(
+                          '03:30',
+                          style: TextStyle(
+                            color: CupertinoColors.white.withOpacity(0.6),
+                            fontSize: 12,
+                          ),
                         ),
                       ],
                     ),
@@ -159,7 +168,7 @@ class PlayerView extends StatelessWidget {
               
               // Controls
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -168,7 +177,7 @@ class PlayerView extends StatelessWidget {
                       onPressed: () {},
                       child: const Icon(
                         CupertinoIcons.backward_fill,
-                        color: CupertinoColors.white,
+                        color: Color(0xFF8B46FF),
                         size: 35,
                       ),
                     ),
@@ -187,13 +196,15 @@ class PlayerView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: CupertinoButton(
-                        padding: EdgeInsets.zero,
-                        onPressed: () {},
-                        child: const Icon(
-                          CupertinoIcons.play_fill,
-                          color: CupertinoColors.white,
-                          size: 42,
+                      child: Center(
+                        child: CupertinoButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {},
+                          child: const Icon(
+                            CupertinoIcons.play_fill,
+                            color: CupertinoColors.white,
+                            size: 42,
+                          ),
                         ),
                       ),
                     ),
@@ -202,7 +213,7 @@ class PlayerView extends StatelessWidget {
                       onPressed: () {},
                       child: const Icon(
                         CupertinoIcons.forward_fill,
-                        color: CupertinoColors.white,
+                        color: Color(0xFF8B46FF),
                         size: 35,
                       ),
                     ),
