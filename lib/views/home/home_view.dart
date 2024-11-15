@@ -19,7 +19,7 @@ class HomeView extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(6),
               decoration: const BoxDecoration(
-                color: CupertinoColors.systemRed,
+                color: Color(0xFF8B46FF),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -68,7 +68,7 @@ class HomeView extends StatelessWidget {
                 width: 36,
                 height: 36,
                 decoration: BoxDecoration(
-                  color: CupertinoColors.activeOrange.withOpacity(0.9),
+                  color: const Color(0xFF8B46FF).withOpacity(0.9),
                   shape: BoxShape.circle,
                 ),
                 child: const Center(
@@ -93,49 +93,67 @@ class HomeView extends StatelessWidget {
             end: Alignment.bottomCenter,
             colors: [
               CupertinoColors.black,
-              Color(0xFF1C1C1E),
-              Color(0xFF1C1C1E),
+              const Color(0xFF1C1C1E).withOpacity(0.98),
+              const Color(0xFF1C1C1E),
             ],
-            stops: const [0.0, 0.3, 1.0],
+            stops: const [0.0, 0.5, 1.0],
           ),
         ),
-        child: const SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: CustomScrollView(
-                  slivers: [
-                    SliverPadding(
-                      padding: EdgeInsets.only(top: 16),
-                      sliver: SliverToBoxAdapter(
-                        child: CategoryTabs(),
-                      ),
-                    ),
-                    SliverPadding(
-                      padding: EdgeInsets.only(top: 32),
-                      sliver: SliverToBoxAdapter(
-                        child: PlaylistSection(
-                          title: '인기 플레이리스트',
-                          showMoreText: '모두 보기',
-                        ),
-                      ),
-                    ),
-                    SliverPadding(
-                      padding: EdgeInsets.only(top: 40),
-                      sliver: SliverToBoxAdapter(
-                        child: PlaylistSection(
-                          title: '추천 플레이리스트',
-                          showMoreText: '모두 보기',
-                        ),
-                      ),
-                    ),
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    const Color(0xFF8B46FF).withOpacity(0.02),
+                    const Color(0xFF8B46FF).withOpacity(0.01),
+                    CupertinoColors.black.withOpacity(0),
                   ],
+                  stops: const [0.0, 0.3, 0.6],
                 ),
               ),
-              MiniPlayer(),
-              CustomNavigationBar(),
-            ],
-          ),
+            ),
+            const SafeArea(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: CustomScrollView(
+                      slivers: [
+                        SliverPadding(
+                          padding: EdgeInsets.only(top: 16),
+                          sliver: SliverToBoxAdapter(
+                            child: CategoryTabs(),
+                          ),
+                        ),
+                        SliverPadding(
+                          padding: EdgeInsets.only(top: 32),
+                          sliver: SliverToBoxAdapter(
+                            child: PlaylistSection(
+                              title: '인기 플레이리스트',
+                              showMoreText: '모두 보기',
+                            ),
+                          ),
+                        ),
+                        SliverPadding(
+                          padding: EdgeInsets.only(top: 40),
+                          sliver: SliverToBoxAdapter(
+                            child: PlaylistSection(
+                              title: '추천 플레이리스트',
+                              showMoreText: '모두 보기',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  MiniPlayer(),
+                  CustomNavigationBar(),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -169,18 +187,18 @@ class _CategoryTabsState extends State<CategoryTabs> {
             child: CupertinoButton(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               color: isSelected 
-                  ? CupertinoColors.systemOrange.withOpacity(0.2) // Highlight selected tab
-                  : CupertinoColors.systemGrey6.withOpacity(0.1),  // Light background for others
+                  ? const Color(0xFF8B46FF).withOpacity(0.15)
+                  : CupertinoColors.systemGrey6.withOpacity(0.1),
               borderRadius: BorderRadius.circular(20),
               onPressed: () => setState(() => _selectedIndex = index),
               child: Text(
                 tab,
                 style: TextStyle(
                   color: isSelected 
-                      ? CupertinoColors.white 
-                      : CupertinoColors.systemGrey,
-                  fontSize: 16,
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                      ? CupertinoColors.white
+                      : CupertinoColors.white.withOpacity(0.5),
+                  fontSize: 15,
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                 ),
               ),
             ),
@@ -305,7 +323,7 @@ class _PlaylistSectionState extends State<PlaylistSection> {
                 style: const TextStyle(
                   color: CupertinoColors.white,
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               widget.title == '인기 플레이리스트'
@@ -321,7 +339,7 @@ class _PlaylistSectionState extends State<PlaylistSection> {
                   : Container(
                       margin: const EdgeInsets.only(right: 4.0),
                       decoration: BoxDecoration(
-                        color: CupertinoColors.systemGrey6.withOpacity(0.2),
+                        color: const Color(0xFF8B46FF).withOpacity(0.12),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: CupertinoButton(
@@ -330,11 +348,12 @@ class _PlaylistSectionState extends State<PlaylistSection> {
                           vertical: 2,
                         ),
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           '모두듣기',
                           style: TextStyle(
-                            color: CupertinoColors.white.withOpacity(0.8),
+                            color: CupertinoColors.white,
                             fontSize: 13,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
@@ -464,10 +483,9 @@ class PlaylistCard extends StatelessWidget {
               end: Alignment.bottomCenter,
               colors: [
                 CupertinoColors.black.withOpacity(0),
-                CupertinoColors.systemOrange.withOpacity(0.1), // Light orange tint
                 CupertinoColors.black.withOpacity(0.7),
               ],
-              stops: const [0.0, 0.5, 1.0],
+              stops: const [0.0, 1.0],
             ),
           ),
         ),
@@ -484,7 +502,7 @@ class PlaylistCard extends StatelessWidget {
                 track.title,
                 style: const TextStyle(
                   color: CupertinoColors.white,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                   fontSize: 13,
                 ),
                 maxLines: 1,
@@ -494,7 +512,7 @@ class PlaylistCard extends StatelessWidget {
               Text(
                 track.artist,
                 style: TextStyle(
-                  color: CupertinoColors.white.withOpacity(0.8),
+                  color: CupertinoColors.white.withOpacity(0.7),
                   fontSize: 12,
                 ),
                 maxLines: 1,
@@ -709,8 +727,8 @@ class _NavBarItem extends StatelessWidget {
           Icon(
             icon,
             color: isSelected 
-                ? CupertinoColors.white 
-                : CupertinoColors.systemGrey,
+                ? const Color(0xFF8B46FF)
+                : CupertinoColors.white.withOpacity(0.4),
             size: 26,
           ),
           const SizedBox(height: 6),
@@ -718,8 +736,8 @@ class _NavBarItem extends StatelessWidget {
             label,
             style: TextStyle(
               color: isSelected 
-                  ? CupertinoColors.white 
-                  : CupertinoColors.systemGrey,
+                  ? const Color(0xFF8B46FF)
+                  : CupertinoColors.white.withOpacity(0.4),
               fontSize: 12,
             ),
           ),

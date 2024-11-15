@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../home/home_view.dart';
 
 class PlayerView extends StatelessWidget {
   const PlayerView({super.key});
@@ -33,7 +34,7 @@ class PlayerView extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       onPressed: () => Navigator.of(context).pop(),
                       child: const Icon(
-                        CupertinoIcons.chevron_down,
+                        CupertinoIcons.chevron_left,
                         color: CupertinoColors.white,
                         size: 28,
                       ),
@@ -169,57 +170,66 @@ class PlayerView extends StatelessWidget {
               // Controls
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {},
-                      child: const Icon(
-                        CupertinoIcons.backward_fill,
-                        color: Color(0xFF8B46FF),
-                        size: 35,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CupertinoButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: () {},
+                        child: const Icon(
+                          CupertinoIcons.backward_fill,
+                          color: Color(0xFF8B46FF),
+                          size: 35,
+                        ),
                       ),
-                    ),
-                    Container(
-                      width: 64,
-                      height: 64,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF8B46FF),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xFF8B46FF).withOpacity(0.3),
-                            blurRadius: 12,
-                            spreadRadius: 2,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {},
-                          child: const Icon(
-                            CupertinoIcons.play_fill,
-                            color: CupertinoColors.white,
-                            size: 42,
+                      Container(
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF8B46FF),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFF8B46FF).withOpacity(0.3),
+                              blurRadius: 12,
+                              spreadRadius: 2,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: CupertinoButton(
+                            padding: EdgeInsets.zero,
+                            onPressed: () {},
+                            child: const Padding(
+                              padding: EdgeInsets.only(left: 2),
+                              child: Icon(
+                                CupertinoIcons.play_fill,
+                                color: CupertinoColors.white,
+                                size: 42,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {},
-                      child: const Icon(
-                        CupertinoIcons.forward_fill,
-                        color: Color(0xFF8B46FF),
-                        size: 35,
+                      CupertinoButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: () {},
+                        child: const Icon(
+                          CupertinoIcons.forward_fill,
+                          color: Color(0xFF8B46FF),
+                          size: 35,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
+              
+              // Add CustomNavigationBar
+              const CustomNavigationBar(),
             ],
           ),
         ),
