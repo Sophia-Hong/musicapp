@@ -1,0 +1,28 @@
+name: music_player
+description: A music player app with Cupertino style
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  cached_network_image: ^3.3.1
+  provider: ^6.1.1
+  flutter_cache_manager: ^3.3.1
+  just_audio: ^0.9.36
+  audio_session: ^0.1.18
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+
+flutter:
+  uses-material-design: false
+  assets:
+    - assets/
+    - assets/covers/
