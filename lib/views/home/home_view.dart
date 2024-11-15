@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../player/player_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -85,42 +86,56 @@ class HomeView extends StatelessWidget {
           ),
         ),
       ),
-      child: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: CustomScrollView(
-                slivers: [
-                  const SliverPadding(
-                    padding: EdgeInsets.only(top: 16),
-                    sliver: SliverToBoxAdapter(
-                      child: CategoryTabs(),
-                    ),
-                  ),
-                  SliverPadding(
-                    padding: const EdgeInsets.only(top: 24),
-                    sliver: SliverToBoxAdapter(
-                      child: PlaylistSection(
-                        title: '인기 플레이리스트',
-                        showMoreText: '모두 보기',
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              CupertinoColors.black,
+              Color(0xFF1C1C1E),
+              Color(0xFF1C1C1E),
+            ],
+            stops: const [0.0, 0.3, 1.0],
+          ),
+        ),
+        child: const SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: CustomScrollView(
+                  slivers: [
+                    SliverPadding(
+                      padding: EdgeInsets.only(top: 16),
+                      sliver: SliverToBoxAdapter(
+                        child: CategoryTabs(),
                       ),
                     ),
-                  ),
-                  SliverPadding(
-                    padding: const EdgeInsets.only(top: 24),
-                    sliver: SliverToBoxAdapter(
-                      child: PlaylistSection(
-                        title: '추천 플레이리스트',
-                        showMoreText: '모두 보기',
+                    SliverPadding(
+                      padding: EdgeInsets.only(top: 32),
+                      sliver: SliverToBoxAdapter(
+                        child: PlaylistSection(
+                          title: '인기 플레이리스트',
+                          showMoreText: '모두 보기',
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    SliverPadding(
+                      padding: EdgeInsets.only(top: 40),
+                      sliver: SliverToBoxAdapter(
+                        child: PlaylistSection(
+                          title: '추천 플레이리스트',
+                          showMoreText: '모두 보기',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const MiniPlayer(),
-            const CustomNavigationBar(),
-          ],
+              MiniPlayer(),
+              CustomNavigationBar(),
+            ],
+          ),
         ),
       ),
     );
@@ -277,11 +292,11 @@ class _PlaylistSectionState extends State<PlaylistSection> {
     final gridHeight = gridItemSize * 3 + 32; // 3 rows + spacing
 
     return Column(
-      mainAxisSize: MainAxisSize.min, // Important: Don't expand unnecessarily
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -304,6 +319,7 @@ class _PlaylistSectionState extends State<PlaylistSection> {
                       ),
                     )
                   : Container(
+                      margin: const EdgeInsets.only(right: 4.0),
                       decoration: BoxDecoration(
                         color: CupertinoColors.systemGrey6.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(15),
@@ -311,7 +327,7 @@ class _PlaylistSectionState extends State<PlaylistSection> {
                       child: CupertinoButton(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 12,
-                          vertical: 4,
+                          vertical: 2,
                         ),
                         onPressed: () {},
                         child: Text(
@@ -326,8 +342,9 @@ class _PlaylistSectionState extends State<PlaylistSection> {
             ],
           ),
         ),
+        const SizedBox(height: 12),
         SizedBox(
-          height: gridHeight, // Fixed height based on calculated size
+          height: gridHeight,
           child: PageView.builder(
             controller: _pageController,
             onPageChanged: (index) {
@@ -496,25 +513,35 @@ class MiniPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 64,
-      decoration: const BoxDecoration(
-        color: Color(0xFF282828),
-        border: Border(
-          top: BorderSide(
-            color: CupertinoColors.systemGrey6,
-            width: 0.2,
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (context) => const PlayerView(),
+          ),
+        );
+      },
+      child: Container(
+        height: 64,
+        decoration: const BoxDecoration(
+          color: Color(0xFF282828),
+          border: Border(
+            top: BorderSide(
+              color: CupertinoColors.systemGrey6,
+              width: 0.2,
+            ),
           ),
         ),
-      ),
-      child: Row(
-        children: [
-          const SizedBox(width: 16),
-          _AlbumArt(),
-          const Expanded(child: _TrackInfo()),
-          _Controls(),
-          const SizedBox(width: 16),
-        ],
+        child: const Row(
+          children: [
+            SizedBox(width: 16),
+            _AlbumArt(),
+            Expanded(child: _TrackInfo()),
+            _Controls(),
+            SizedBox(width: 16),
+          ],
+        ),
       ),
     );
   }
@@ -624,7 +651,7 @@ class CustomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 72,
       decoration: const BoxDecoration(
         color: CupertinoColors.black,
         border: Border(
@@ -634,7 +661,7 @@ class CustomNavigationBar extends StatelessWidget {
           ),
         ),
       ),
-      child: Row(
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _NavBarItem(
@@ -674,7 +701,7 @@ class _NavBarItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       onPressed: () {},
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -684,16 +711,16 @@ class _NavBarItem extends StatelessWidget {
             color: isSelected 
                 ? CupertinoColors.white 
                 : CupertinoColors.systemGrey,
-            size: 24,
+            size: 26,
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 6),
           Text(
             label,
             style: TextStyle(
               color: isSelected 
                   ? CupertinoColors.white 
                   : CupertinoColors.systemGrey,
-              fontSize: 11,
+              fontSize: 12,
             ),
           ),
         ],
